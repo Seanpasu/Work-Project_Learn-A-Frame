@@ -3,7 +3,7 @@ layout: environment_basic
 ---
 <a-scene xr-mode-ui="enabled: true" webxr="optionalFeatures: local-floor, bounded-floor, hand-tracking">
 	<a-assets>
-		<video id="video" autoplay loop="true" src="assets/videos/sharks.mp4"></video>
+		<video id="video" autoplay="true" loop="true" src="assets/videos/sharks.mp4"></video>
 	</a-assets>
 
 	<!-- Add Hand models for tracking visualization -->
@@ -13,10 +13,28 @@ layout: environment_basic
 	</a-camera>
 
 	<!-- Video -->
-	<a-videosphere class="clickable video" src="#video"></a-videosphere>
+	<a-videosphere class="clickable video" src="#video" play-on-click></a-videosphere>
 
 	<script>
-		AFRAME.registerComponent("gesture-listener", {
+		AFRAME.registerComponent('play-on-click', {
+			init: function () {
+				this.onClick = this.onClick.bind(this);
+			},
+			play: function () {
+				window.addEventListener('click', this.onClick);
+			},
+			pause: function () {
+				window.removeEventListener('click', this.onClick);
+			},
+			onClick: function (evt) {
+				var videoEl = this.el.getAttribute('material').src;
+				if (!videoEl) { return; }
+				this.el.object3D.visible = true;
+				videoEl.play();
+			}
+		});
+
+		AFRAME.registerComponent('gesture-listener', {
 			schema: {
 				hand: { type: "string" }
 			},
