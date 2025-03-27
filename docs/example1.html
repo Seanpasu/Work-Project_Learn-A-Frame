@@ -9,8 +9,10 @@ layout: environment_basic
 	</a-assets>
 
 	<!-- Add Hand models for tracking visualization -->
-	<a-hand-tracking hand="left"></a-hand-tracking>
-	<a-hand-tracking hand="right"></a-hand-tracking>
+	<a-camera>
+		<a-entity id="left-hand" hand-tracking="hand: left" raycaster="objects: .clickable; showline: true; lineColor: rgba(173, 216, 230, 0.5)" position="0 1 -2" gesture-listener="hand: left"></a-entity>
+		<a-entity id="right-hand" hand-tracking="hand: right" raycaster="objects: .clickable; showline: true; lineColor: rgba(173, 216, 230, 0.5)" position="0 1 -2" gesture-listener="hand: right"></a-entity>
+	</a-camera>
 
 	<!-- Floor and skybox -->
 	<a-plane position="0 0 0" rotation="-90 0 0" src="url(assets/textures/grass/Seamless green grass vector pattern.jpg)" material="repeat: 10 10;" height="10" width="10"></a-plane>
@@ -21,5 +23,28 @@ layout: environment_basic
 
 	<!-- gltf entities -->
 	<a-entity gltf-model="#koi-gltf" position="0 0.5 -1.2" rotation="0 -90 0" scale="0.08 0.08 0.08" animation-mixer></a-entity>
+
+	<script>
+	AFRAME.registerComponent("gesture-listener", {
+		schema: {
+			hand: { type: "string" }
+		},
+		init: function () {
+			this.el.addEventListener('hand-tracking-updated', (event) => {
+				const handData = event.detail.hand;
+
+				// pointing gesture
+				const isPointing = handData.fingers[1].extended && handData.fingers.slice(2).every(finger => !finger.extended);
+
+				if (isPointing) {	// Enable clicking and make line opaque when pointing
+					this.el.setAttribute("raycaster", "enabled", true);
+					this.el.setAttribute("line", "color", "rgba(0, 255, 0, 1)");
+				} else {	// Disable clicking and make line transparent when not pointing
+					this.el.setAttribute("raycaster", "enabled", false);
+					this.el.setAttribute("line", "color", "rgba(173, 216, 20, 0.5)")
+				}
+			});
+		}
+	});
 
 </a-scene>
