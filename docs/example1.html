@@ -1,17 +1,25 @@
 ---
 layout: environment_basic
 ---
-<a-scene xr-mode-ui="enabled: true" webxr="optionalFeatures: local-floor, bounded-floor, hand-tracking, passthrough">
+<a-scene xr-mode-ui="enabled: true" webxr="optionalFeatures: local-floor, bounded-floor, hand-tracking">
 	<a-assets>
 		<a-asset-item id="flower-obj" src="assets/models/flower/model.obj"></a-asset-item>
 		<a-asset-item id="flower-mtl" src="assets/models/flower/materials.mtl"></a-asset-item>
 		<a-asset-item id="koi-gltf" src="assets/models/koi/scene.gltf"></a-asset-item>
 	</a-assets>
 
+	<!-- Add Hand models for tracking visualization -->
+	<a-hand-tracking hand="left"></a-hand-tracking>
+	<a-hand-tracking hand="right"></a-hand-tracking>
 
+	<!-- Floor and skybox -->
+	<a-plane position="0 0 0" rotation="-90 0 0" src="url(assets/textures/grass/Seamless green grass vector pattern.jpg)" material="repeat: 10 10;" height="10" width="10"></a-plane>
 	<a-sky color="#ECECEC"></a-sky>
 
-	<a-entity obj-model="obj: #flower-obj; mtl: #flower-mtl" position="-2 0.5 -3" rotation="0 180 0" scale="0.5 0.5 0.5"></a-entity>
-	<a-entity gltf-model="#koi-gltf" position="0 0.5 -1.2" rotation="0 90 0" scale="0.2 0.2 0.2"></a-entity>
+	<!-- Overly basic obj entity -->
+	<a-entity obj-model="obj: #flower-obj; mtl: #flower-mtl" position="-2 0.5 -2" rotation="0 180 0" scale="0.1 0.1 0.1"></a-entity>
+
+	<!-- gltf entities -->
+	<a-entity gltf-model="#koi-gltf" position="0 0.5 -1.2" rotation="0 -90 0" scale="0.15 0.15 0.15" animation-mixer></a-entity>
 
 </a-scene>
