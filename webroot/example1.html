@@ -1,21 +1,17 @@
 ---
 layout: environment_basic
 ---
-	<html>
-	<head>
-		<script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
-	</head>
-	<body>
-		<a-scene>
-			<a-assets>
-				<a-asset-item id="flower-obj" src="/assets/models/flower/model.obj"></a-asset-item>
-				<a-asset-item id="flower-mtl" src="/assets/models/flower/materials.mtl"></a-asset-item>
-			</a-assets>
+<a-scene xr-mode-ui="enabled: false" webxr="optionalFeatures: local-floor, bounded-floor, hand-tracking, passthrough">
+	<a-assets>
+		<a-asset-item id="flower-obj" src="/assets/models/flower/model.obj"></a-asset-item>
+		<a-asset-item id="flower-mtl" src="/assets/models/flower/materials.mtl"></a-asset-item>
+		<a-asset-item id="koi-gltf" src="/assets/models/koi/scene.gltf"></a-asset-item>
+	</a-assets>
 
 
-			<a-sky color="#ECECEC"></a-sky>
+	<a-sky color="#ECECEC"></a-sky>
 
-			<a-entity obj-model="obj: #flower-obj; mtl: #flower-mtl"> </a-entity>
-		</a-scene>
-	</body>
-</html>
+	<a-entity obj-model="obj: #flower-obj; mtl: #flower-mtl" position="-2 0.5 -3" rotation="0 180 0" scale="0.5 0.5 0.5"></a-entity>
+	<a-entity gltf-model="#koi-gltf" position="0 0.5 -1.2" rotation="0 90 0" scale="0.2 0.2 0.2"></a-entity>
+
+</a-scene>

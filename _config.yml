@@ -29,11 +29,6 @@ description: >- # this means to ignore newlines until "baseurl:"
 #github_username:  jekyll
 source: webroot
 
-# Build settings
-theme: minima
-plugins:
-  - jekyll-feed
-
 collections_dir: collections
 collections:
   entities:
